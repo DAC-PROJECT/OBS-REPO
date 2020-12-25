@@ -1,6 +1,5 @@
 const books =  [
     {
-        _id:'1',
         name: 'A Promised Land',
         image: '/images/A_Promised_Land.png',
         description:
@@ -14,7 +13,6 @@ const books =  [
         numReviews:8,
     },
     {
-        _id:'2',
         name: 'Here There and Everywhere',
         image: '/images/HereThereAndEverywhere.png',
         description:
@@ -27,7 +25,6 @@ const books =  [
         numReviews:6,
     },
     {
-        _id:'3',
         name: 'Ikigai',
         image: '/images/Ikigai.png',
         description:
@@ -40,7 +37,6 @@ const books =  [
         numReviews:50,
     },
     {
-        _id:'4',
         name: 'India2020',
         image: '/images/India2020.png',
         description:
@@ -53,7 +49,6 @@ const books =  [
         numReviews:4,
     },
     {
-        _id:'5',
         name: 'Life is What You MakeIt',
         image: '/images/LifeisWhatYouMakeIt.png',
         description:
@@ -66,7 +61,6 @@ const books =  [
         numReviews:13,
     },
     {
-        _id:'6',
         name: 'मैं मन हूँ',
         image: '/images/MaiMannHu.png',
         description:
@@ -80,4 +74,4 @@ const books =  [
     },
 ]
 
-module.exports= books;
+export default books;
