@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomeScreen from './screens/HomeScreen';
 import BookScreen from './screens/BookScreen';
-import books from './books';
+ 
 
 const App = () => {
   return (
