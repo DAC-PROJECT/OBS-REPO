@@ -1,20 +1,21 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import Rating from './Rating'
+import React from 'react';
+import {Link} from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import Rating from './Rating';
 
 export default function Book({book}) {
     return (
         <Card className= 'my-3 p-3 rounded'>
-            <a href={`/book/${book._id}`}>
+            <Link to={`/book/${book._id}`}>
                 <Card.Img src={book.image}  variant='top'/>
-            </a>
+            </Link>
 
             <Card.Body>
-                <a href={`/book/${book._id}`}>
+                <Link to={`/book/${book._id}`}>
                     <Card.Title as='div'>
                         <strong>{book.name}</strong>
                     </Card.Title>
-                </a>
+                </Link>
                 <Card.Text as='div'>
                     <Rating 
                     value={book.rating} 
