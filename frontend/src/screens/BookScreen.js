@@ -12,7 +12,7 @@ const BookScreen = ({match}) => {
         setBook(data)
     }
    fetchBook()
-    },[])
+    },[match])
     return (
         <>
             <Link className='btn btn-light my-3' to='/'>
