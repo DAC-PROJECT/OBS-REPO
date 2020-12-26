@@ -1,19 +1,25 @@
-const express=require('express')
+import express from 'express'
+import dotenv from 'dotenv'
+import colors from 'colors'
+import {notFound,errorHandler} from './middleware/errorMiddleware.js'
+import connectDb from './config/db.js'
+import bookRoutes from './routes/booksRoutes.js'
+
+dotenv.config()
+connectDb()
 const app=express()
-const books=require('./data/books')
-
-
+ 
 app.get('/',(req,res)=>{
     res.send('Api is Running');
 })
 
-app.get('/api/books',(req,res)=>{
-      res.json(books);  
-})
 
+app.use('/api/books',bookRoutes)
 
-app.get('/api/books/:id',(req,res)=>{
-    const book=books.find(p=>p._id===req.params.id)
-    res.json(book);  
-})
-app.listen(5000,console.log('Server running on port 5000'))
+app.use(notFound)
+
+app.use(errorHandler)
+
+const PORT =process.env.PORT || 5001
+
+app.listen(PORT,console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow))
