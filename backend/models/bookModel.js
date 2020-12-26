@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const reviewSchema=mongoose.Schema({
-     name:{
+    name:{
          type:String,
          required:true
     },
@@ -32,23 +32,33 @@ const bookSchema=mongoose.Schema({
         required:true,
         unique:true
     },
-    author:{
-        type:String,
-        required:true
-    },
-    category:{
-        type:String,
-        required:true
-    },
-    publication:{
-        type:String,
-        required:true,
-    },
     description:{
         type:String,
         required:true,
     },
-    reviews:[reviewSchema],
+    writer:{
+        type:String,
+        required:true
+    },
+    genre:{
+        type:String,
+        required:true
+    },
+    price:{
+        type:Number,
+        required:true,
+        default:0
+    },
+    pages:{
+        type:Number,
+        required:true,
+        default:0
+    },
+    countInStock:{
+        type:Number,
+        required:true,
+        default:0
+    },
     rating:{
         type:Number,
         required:true,
@@ -59,16 +69,14 @@ const bookSchema=mongoose.Schema({
         required:true,
         default:0
     },
-    price:{
-        type:Number,
+    publication:{
+        type:String,
         required:true,
-        default:0
-    },
-    countInStock:{
-        type:Number,
-        required:true,
-        default:0
-    },
+        default:'publication_name'
+    }
+   
+   // reviews:[reviewSchema],
+     
 },{
     timestamps:true
 })
