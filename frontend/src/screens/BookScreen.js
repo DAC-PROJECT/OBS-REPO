@@ -1,24 +1,31 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import {Link } from 'react-router-dom'
+import {useDispatch,useSelector} from 'react-redux'
 import {Row,Col,Image,ListGroup,Card,Button} from 'react-bootstrap'
 import Rating from '../components/Rating'
-import axios from 'axios'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import {listBookDetails} from '../actions/bookActions'
+
+
+
 
 const BookScreen = ({match}) => {
-   const[book,setBook]=useState({})
+
+    const dispatch=useDispatch()
+    const bookDetails=useSelector(state=>state.bookDetails)
+    const {loading,error, book}=bookDetails
+
    useEffect(()=>{
-    const fetchBook=async ()=>{
-        const {data}=await axios.get(`/api/books/${match.params.id}`)
-        setBook(data)
-    }
-   fetchBook()
-    },[match])
+    dispatch(listBookDetails(match.params.id)) 
+    },[dispatch,match])
     return (
         <>
             <Link className='btn btn-light my-3' to='/'>
                 Go Back
              </Link>
-             <Row>
+             {loading ? <Loader />: error? <Message variant='danger' >{error}</Message> : (
+                 <Row>
                  <Col md={3}>
                  <Image src={book.image} alt={book.name}  />
                  </Col>
@@ -71,7 +78,8 @@ const BookScreen = ({match}) => {
                      </Card>
                  </Col>
              </Row>
-        </>
+         )}
+     </>
     )
 }
 
