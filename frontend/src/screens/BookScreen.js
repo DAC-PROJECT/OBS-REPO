@@ -22,7 +22,9 @@ const [qty, setQty] = useState(1)
     },[dispatch,match])
 
     const addToCartHandler = () => {
-            history.push('/cart/${match.params.id}?qty=${qty}')
+            history.push(`/cart/${match.params.id}?qty=${qty}`
+            
+            )
     }
     return (
         <>
@@ -79,7 +81,8 @@ const [qty, setQty] = useState(1)
                     <ListGroup.Item>
                         <Row>
                             <Col>Qty</Col>
-                            <Col> <Form.Control 
+                            <Col> 
+                            <Form.Control 
                             as='select' 
                             value={qty} 
                             onChange={(e) =>setQty(e.target.value)}>

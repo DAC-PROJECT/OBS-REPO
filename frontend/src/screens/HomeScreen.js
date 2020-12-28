@@ -6,25 +6,17 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listBooks }  from '../actions/bookActions'
 
-//import axios from 'axios'
 
 export default function HomeScreen(props)
  {
      const dispatch = useDispatch()
-     //const [books,setBooks] = useState([])
      const bookList = useSelector(state => state.bookList)
 
      const{ loading,error,books } = bookList
 
     useEffect(()=>{
             dispatch(listBooks())    
-        // const fetchBooks=async ()=>{
-        //     const {data}=await axios.get('/api/books')
-        //     setBooks(data)
-        // }
-
-        // fetchBooks()
-    },[dispatch])
+        },[dispatch])
 
   
     return (
