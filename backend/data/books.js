@@ -8,7 +8,7 @@ const books =  [
         genre:'biography memoir',
         price:1200,
         pages:768,
-        countInStock: 3,
+        countInStock:3,
         rating:1.0 ,
         numReviews:8,
     },

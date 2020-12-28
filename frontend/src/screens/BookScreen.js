@@ -8,8 +8,6 @@ import Loader from '../components/Loader'
 import {listBookDetails} from '../actions/bookActions'
 
 
-
-
 const BookScreen = ({match}) => {
 
     const dispatch=useDispatch()
