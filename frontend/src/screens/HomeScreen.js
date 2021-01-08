@@ -21,9 +21,9 @@ export default function HomeScreen(props)
   
     return (
         <>
-         <h1>Latest Books</h1>;
+         <h1>Latest Books</h1>
          {loading ? (
-         <Loader></Loader>
+        <Loader></Loader>
          ) :  error ?(
          <Message variant='danger' > {error} </Message>
          ) : (<Row>
