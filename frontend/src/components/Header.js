@@ -35,7 +35,6 @@ const Header = () => {
     </LinkContainer>
 
     {userInfo ?(
-         
           <NavDropdown title={userInfo.name}  id='username'>
            <LinkContainer to='/profile'>
              <NavDropdown.Item>
@@ -47,12 +46,25 @@ const Header = () => {
            </NavDropdown.Item>
           </NavDropdown>
 
-    ) : <LinkContainer to='/login'>
+    ) :( <LinkContainer to='/login'>
     <Nav.Link >
        <i className='fas fa-user'></i>Sign In
      </Nav.Link>
-   </LinkContainer> }
-    
+   </LinkContainer>
+   )}
+     {userInfo && userInfo.isAdmin && ( 
+         <NavDropdown title='Menu'  id='adminmenu'>
+         <LinkContainer to='/admin/userlist'>
+           <NavDropdown.Item> Users</NavDropdown.Item>
+         </LinkContainer>
+         <LinkContainer to='/admin/booklist'>
+           <NavDropdown.Item> Books</NavDropdown.Item>
+         </LinkContainer>
+         <LinkContainer to='/admin/orderlist'>
+           <NavDropdown.Item> Orders</NavDropdown.Item>
+         </LinkContainer>
+        </NavDropdown>
+     )}
     </Nav>
    
   </Navbar.Collapse>
