@@ -39,7 +39,7 @@
             <Form onSubmit={submitHandler} >
               <Form.Group controlId='email' >
                  <Form.Label>
-                     Email Address
+                     Email 
                  </Form.Label>
                  <Form.Control type='email'
                                placeholder='Enter email'
@@ -50,7 +50,7 @@
 
               <Form.Group controlId='password' >
                  <Form.Label>
-                     Password Address
+                     Password 
                  </Form.Label>
                  <Form.Control type='text'
                                placeholder='Enter password'
