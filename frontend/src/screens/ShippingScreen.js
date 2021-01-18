@@ -6,14 +6,14 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import {saveShippingAddress} from '../actions/cartActions'
 
 const ShippingScreen = ({history}) => {
-    const cart = useSelector(state=>state.cart)
+    const cart = useSelector(state=>state.cart) 
     const {shippingAddress} = cart
 
     const[address, setAddress] = useState(shippingAddress.address)
     const[city, setCity] = useState(shippingAddress.city)
     const[pinCode, setPinCode] = useState(shippingAddress.pinCode)
     const[country, setCountry] = useState(shippingAddress.country)
-
+   
     const dispatch = useDispatch()
 
     const submitHandler = (e) => {

@@ -52,7 +52,7 @@
                  <Form.Label>
                      Password 
                  </Form.Label>
-                 <Form.Control type='text'
+                 <Form.Control type='password'
                                placeholder='Enter password'
                                value={password}
                                onChange={(e)=>setPassword(e.target.value)}

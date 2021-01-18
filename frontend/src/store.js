@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import{ composeWithDevTools } from 'redux-devtools-extension'
-import{ bookListReducer,bookDetailsReducer } from './reducers/bookReducers'
+import{ bookListReducer,bookDetailsReducer,bookDeleteReducer,bookCreateReducer, bookUpdateReducer } from './reducers/bookReducers'
 import{cartReducer} from './reducers/cartReducers'
 import {
     userLoginReducer,
@@ -12,13 +12,16 @@ import {
     userDeleteReducer, 
     userUpdateReducer,
 } from './reducers/userReducer'
-import{orderCreateReducer} from './reducers/orderReducers'
+import{orderCreateReducer, orderDetailsReducer, orderListReducer} from './reducers/orderReducers'
 
 const reducer = combineReducers({
     bookList:bookListReducer,
     bookDetails:bookDetailsReducer,
+    bookDelete:bookDeleteReducer,
+    bookCreate:bookCreateReducer,
+    bookUpdate:bookUpdateReducer,
     cart: cartReducer,
-    userLogin:userLoginReducer,
+    userLogin:userLoginReducer,     
     userRegister:userRegisterReducer,
     userDetails:userDetailsReducer,
     userUpdateProfile:userUpdateProfileReducer,
@@ -26,6 +29,8 @@ const reducer = combineReducers({
     userDelete:userDeleteReducer,
     userUpdate:userUpdateReducer,
     orderCreate:orderCreateReducer,
+    orderDetails:orderDetailsReducer,
+    orderList:orderListReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? 
@@ -42,7 +47,7 @@ JSON.parse(localStorage.getItem('shippingAddress')) : {}
 
 const initialState = {
     cart: { cartItems: cartItemsFromStorage, 
-            shippingAddress: shippingAddressFromStorage},
+            shippingAddress: shippingAddressFromStorage,},
     userLogin:{userInfo:userInfoFromStorage},
 } 
 
