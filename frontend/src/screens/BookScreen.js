@@ -45,7 +45,8 @@ const [qty, setQty] = useState(1)
                         <Rating value={book.rating} text={`${book.numReviews}reviews` } />
                       </ListGroup.Item>
                       <ListGroup.Item>
-                     Price: ₹{book.price}
+                     Price: 
+                     {book.price}
                       </ListGroup.Item>
                       <ListGroup.Item>
                      Description: {book.description}
