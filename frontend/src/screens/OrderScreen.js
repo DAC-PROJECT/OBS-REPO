@@ -7,7 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails,payOrder}from '../actions/orderActions' 
 import { orderDetailsReducer } from '../reducers/orderReducers'
-import {CART_REMOVE_ITEM} from '../constants/cartConstants'
+import {CART_RESET_ITEM} from '../constants/cartConstants'
 import {   ORDER_PAY_RESET} from '../constants/orderConstants'
 
 
@@ -44,7 +44,8 @@ const OrderScreen = ({match}) => {
         if(!order.isPaid){
             setPayNow(true)
             dispatch(payOrder(order._id,order))
-            dispatch({type:CART_REMOVE_ITEM})
+             dispatch({type:ORDER_PAY_RESET})
+             dispatch({type:CART_RESET_ITEM})
         }
         
     }
