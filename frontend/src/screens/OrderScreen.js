@@ -1,18 +1,29 @@
-import React,{useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
+import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image} from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails}from '../actions/orderActions' 
+import { getOrderDetails,payOrder}from '../actions/orderActions' 
 import { orderDetailsReducer } from '../reducers/orderReducers'
+import {CART_REMOVE_ITEM} from '../constants/cartConstants'
+import {   ORDER_PAY_RESET} from '../constants/orderConstants'
 
 
 const OrderScreen = ({match}) => {
+
     const orderId=match.params.id
+    const [payNow,setPayNow]=useState(false)
+
     const dispatch = useDispatch()
+
     const orderDetails = useSelector((state)=>state.orderDetails)
     const{ order, loading, error} = orderDetails
+
+    const orderPay = useSelector((state)=>state.orderPay)
+    const{ loading:loadingPay, success:successPay} = orderPay
+     
      
     if(!loading){
      const addDecimals = (num) => {
@@ -22,8 +33,22 @@ const OrderScreen = ({match}) => {
                      acc + item.price*item.qty,0))
     }
     useEffect(() => {
-       dispatch(getOrderDetails(orderId)) 
-    }, [])
+          if (!order || successPay) {
+            dispatch({type:ORDER_PAY_RESET})
+            dispatch(getOrderDetails(orderId))   
+         }  
+               
+    }, [dispatch,orderId,successPay,order])
+
+    const payNowHandler=()=>{
+        if(!order.isPaid){
+            setPayNow(true)
+            dispatch(payOrder(order._id,order))
+            dispatch({type:CART_REMOVE_ITEM})
+        }
+        
+    }
+    
 
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>:
     <>
@@ -38,9 +63,10 @@ const OrderScreen = ({match}) => {
            <p><strong>Address:</strong>
            {order.shippingAddress.address},
            {order.shippingAddress.city},
-            {order.shippingAddress.state}
-           {order.shippingAddress.pinCode},
-           {order.shippingAddress.country}</p>
+            {order.shippingAddress.state},
+           {order.shippingAddress.country},
+           {order.shippingAddress.pinCode},</p>
+           <p><strong>Phone :{order.shippingAddress.phone}</strong></p>
            {order.isDelivered ?( <Message variant='success'>Delivered on {order.deliveredAt}</Message>):(
            <Message variant='danger'>Not Delivered</Message>)}
          </ListGroup.Item>
@@ -105,6 +131,15 @@ const OrderScreen = ({match}) => {
                                 <Col>Rs.{order.totalPrice}</Col>
                             </Row>
                         </ListGroup.Item>
+                        {!order.isPaid && (
+                         <ListGroup.Item>
+                             {loadingPay && <Loader/>}
+                             {!payNow &&
+                              <Button type='button'
+                              onClick={payNowHandler} className='btn-block'>Pay Now</Button>    
+                             }
+                         </ListGroup.Item>
+                        )}
                     </ListGroup>
                 </Col>
             </Row>
