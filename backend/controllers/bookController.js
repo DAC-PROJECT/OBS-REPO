@@ -2,7 +2,6 @@ import asyncHandler from 'express-async-handler'
 import Book from '../models/bookModel.js'
 
 
-
 //@desc Fetch all books
 //@route Get /api/books
 //@access public
