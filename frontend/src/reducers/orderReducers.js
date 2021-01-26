@@ -69,7 +69,6 @@ export const orderDetailsReducer =(state = { loading:true,orderItems:[],shipping
 }
 
 
-
 export const orderPayReducer =(state = {}, action) => {
     switch(action.type){
         case ORDER_PAY_REQUEST:
@@ -118,7 +117,6 @@ export const orderDeliverReducer =(state = {}, action) => {
 
 
 
-
 export const orderMyListReducer =(state = {orders:[]}, action) => {
     switch(action.type){
         case ORDER_MY_LIST_REQUEST:
@@ -142,6 +140,7 @@ export const orderMyListReducer =(state = {orders:[]}, action) => {
             default:
                 return state
     }
+
 }
 
 
@@ -165,4 +164,5 @@ export const orderListReducer =(state = {orders:[]}, action) => {
             default:
                 return state
     }
+
 }

@@ -133,7 +133,6 @@ export const payOrder=(orderId,order)=>async(dispatch,getState)=>{
       }
 }
 
-
 export const deliverOrder=(order)=>async(dispatch,getState)=>{
     try {
        dispatch({
@@ -201,7 +200,6 @@ export const listMyOrders=()=>async(dispatch,getState)=>{
            })
 
       }
-}
 
 
 export const listOrders=()=>async(dispatch,getState)=>{
@@ -236,4 +234,5 @@ export const listOrders=()=>async(dispatch,getState)=>{
            })
 
       }
+
 }

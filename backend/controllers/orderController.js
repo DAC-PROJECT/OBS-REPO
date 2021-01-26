@@ -121,7 +121,6 @@ const getOrders= asyncHandler(async(req,res)=>{
      res.json(orders)  
 })
 
-
 export{
     addOrderItems,
     getOrderById,
@@ -129,4 +128,6 @@ export{
     updateOrderToDelivered,
     getMyOrders,
     getOrders,
+    getMyOrders,
 }
+

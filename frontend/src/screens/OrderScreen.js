@@ -1,4 +1,5 @@
- import React,{useState,useEffect} from 'react'
+
+import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image} from 'react-bootstrap'
@@ -12,6 +13,13 @@ import {   ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstan
 
 
 const OrderScreen = ({match,/*history*/}) => {
+import { getOrderDetails,payOrder}from '../actions/orderActions' 
+import { orderDetailsReducer } from '../reducers/orderReducers'
+import {CART_REMOVE_ITEM} from '../constants/cartConstants'
+import {   ORDER_PAY_RESET} from '../constants/orderConstants'
+
+
+const OrderScreen = ({match}) => {
 
     const orderId=match.params.id
     const [payNow,setPayNow]=useState(false)
@@ -24,11 +32,13 @@ const OrderScreen = ({match,/*history*/}) => {
     const orderPay = useSelector((state)=>state.orderPay)
     const{ loading:loadingPay, success:successPay} = orderPay
      
+
     const orderDeliver = useSelector((state)=>state.orderDeliver)
     const{ loading:loadingDeliver, success:successDeliver} = orderDeliver
      
     const userLogin = useSelector((state)=>state.userLogin)
     const{ userInfo} = userLogin
+
      
     if(!loading){
      const addDecimals = (num) => {
@@ -38,6 +48,7 @@ const OrderScreen = ({match,/*history*/}) => {
                      acc + item.price*item.qty,0))
     }
     useEffect(() => {
+
         // if(userInfo){
         //     history.push('/login')
         // }
@@ -52,6 +63,14 @@ const OrderScreen = ({match,/*history*/}) => {
                
     }, [dispatch,orderId,successPay,successDeliver,order])
 
+          if (!order || successPay) {
+            dispatch({type:ORDER_PAY_RESET})
+            dispatch(getOrderDetails(orderId))   
+         }  
+               
+    }, [dispatch,orderId,successPay,order])
+
+
     const payNowHandler=()=>{
         if(!order.isPaid){
             setPayNow(true)
@@ -61,11 +80,13 @@ const OrderScreen = ({match,/*history*/}) => {
         
     }
 
+
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
     }
-    
 
+
+   
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>:
     <>
     <h1>Order{order._id}</h1>
@@ -165,6 +186,7 @@ const OrderScreen = ({match,/*history*/}) => {
                                 </Button>   
                             </ListGroup.Item>
                         )}
+
                     </ListGroup>
                 </Col>
             </Row>
