@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
+import morgan from 'morgan'
 import {notFound,errorHandler} from './middleware/errorMiddleware.js'
 import connectDb from './config/db.js'
 import bookRoutes from './routes/booksRoutes.js'
@@ -10,6 +11,10 @@ import orderRoutes from './routes/orderRoutes.js'
 dotenv.config()
 connectDb()
 const app=express()
+
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev')) 
+}
  
 app.use(express.json())
 
@@ -21,6 +26,7 @@ app.get('/',(req,res)=>{
 app.use('/api/books',bookRoutes)
 app.use('/api/users',userRoutes) 
 app.use('/api/orders',orderRoutes) 
+
 
 app.use(notFound)
 

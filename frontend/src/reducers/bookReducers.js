@@ -16,17 +16,26 @@ import {
     BOOK_UPDATE_SUCCESS,
     BOOK_UPDATE_FAIL,
     BOOK_UPDATE_RESET,
-} from '../constants/bookConstants'
+    BOOK_CREATE_REVIEW_REQUEST,
+    BOOK_CREATE_REVIEW_SUCCESS,
+    BOOK_CREATE_REVIEW_FAIL,
+    BOOK_CREATE_REVIEW_RESET,
+   }   
+from '../constants/bookConstants'
 
-export const bookListReducer =  (state = {books: []}, action) => 
-{
+export const bookListReducer =  (state = {books: []}, action) => {
+   
     switch(action.type)
     {
         case BOOK_LIST_REQUEST:
             return {loading:true, books: []}
 
         case BOOK_LIST_SUCCESS:
-            return {loading:false, books: action.payload}
+            return {loading:false, 
+                books: action.payload.books ,
+                pages: action.payload.pages,
+                page: action.payload.page, 
+            }
 
         case BOOK_LIST_FAIL:
             return {loading:false, error: action.payload}
@@ -39,8 +48,7 @@ export const bookListReducer =  (state = {books: []}, action) =>
 
 
 
-export const bookDetailsReducer =  (state = {book: {reviews:[]}}, action) => 
-{
+export const bookDetailsReducer =  (state = {book: {reviews:[]}}, action) => {
     switch(action.type)
     {
         case BOOK_DETAILS_REQUEST:
@@ -58,8 +66,70 @@ export const bookDetailsReducer =  (state = {book: {reviews:[]}}, action) =>
  
 }
 
-export const bookDeleteReducer =  (state = {}, action) => 
-{
+// export const bookDeleteReducer =  (state = {}, action) => 
+// {
+//     switch(action.type)
+//     {
+//         case BOOK_DELETE_REQUEST:
+//             return {loading:true}
+
+//         case BOOK_DELETE_SUCCESS:
+//             return {loading:false, success: true}
+
+//         case BOOK_DELETE_FAIL:
+//             return {loading:false, error: action.payload}
+
+//         default:
+//             return state
+//     }
+
+// }
+
+// export const bookCreateReducer =  (state = {}, action) => 
+// {
+//     switch(action.type)
+//     {
+//         case BOOK_CREATE_REQUEST:
+//             return {loading:true}
+
+//         case BOOK_CREATE_SUCCESS:
+//             return {loading:false, success: true, book: action.payload}
+
+//         case BOOK_CREATE_FAIL:
+//             return {loading:false, error: action.payload}
+
+//         case BOOK_CREATE_RESET:
+//             return {}
+
+//         default:
+//             return state
+//     }
+
+// }
+
+// export const bookUpdateReducer =  (state = {book: {}}, action) => 
+// {
+//     switch(action.type)
+//     {
+//         case BOOK_UPDATE_REQUEST:
+//             return {loading:true}
+
+//         case BOOK_UPDATE_SUCCESS:
+//             return {loading:false, success: true, book: action.payload}
+
+//         case BOOK_UPDATE_FAIL:
+//             return {loading:false, error: action.payload}
+
+//         case BOOK_UPDATE_RESET:
+//             return { book: {}}
+
+//         default:
+//             return state
+//     }
+
+// }
+
+export const bookDeleteReducer =  (state = {}, action) => {
     switch(action.type)
     {
         case BOOK_DELETE_REQUEST:
@@ -77,8 +147,7 @@ export const bookDeleteReducer =  (state = {}, action) =>
 
 }
 
-export const bookCreateReducer =  (state = {}, action) => 
-{
+export const bookCreateReducer =  (state = {}, action) => {
     switch(action.type)
     {
         case BOOK_CREATE_REQUEST:
@@ -99,8 +168,7 @@ export const bookCreateReducer =  (state = {}, action) =>
 
 }
 
-export const bookUpdateReducer =  (state = {book: {}}, action) => 
-{
+export const bookUpdateReducer =  (state = { book:{} }, action) => {
     switch(action.type)
     {
         case BOOK_UPDATE_REQUEST:
@@ -113,7 +181,28 @@ export const bookUpdateReducer =  (state = {book: {}}, action) =>
             return {loading:false, error: action.payload}
 
         case BOOK_UPDATE_RESET:
-            return { book: {}}
+            return { book:{} }
+
+        default:
+            return state
+    }
+
+}
+
+export const bookReviewReducer =  (state = {}, action) => {
+    switch(action.type)
+    {
+        case BOOK_CREATE_REVIEW_REQUEST:
+            return {loading:true}
+
+        case BOOK_CREATE_REVIEW_SUCCESS:
+            return {loading:false, success: true}
+
+        case BOOK_CREATE_REVIEW_FAIL:
+            return {loading:false, error: action.payload}
+
+        case BOOK_CREATE_REVIEW_RESET:
+            return {}
 
         default:
             return state

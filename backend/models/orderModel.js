@@ -26,15 +26,17 @@ const orderSchema=mongoose.Schema({
         state:{type:String,required:true},
         pinCode:{type:String,required:true},
         country:{type:String,required:true,default:"India"},
+        phone:{type:String,required:true,default:""},
     },
     paymentMethod:{
         type:String,
         required:true,
+        default:'paytm'
     },
     paymentResult:{
         id:{type:String},
         status:{type:String},
-        update_time:{type:String},
+        update_time:Date,
         email_address:{type:String},
     },
     taxPrice:{

@@ -1,8 +1,21 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import{ composeWithDevTools } from 'redux-devtools-extension'
-import{ bookListReducer,bookDetailsReducer,bookDeleteReducer,bookCreateReducer, bookUpdateReducer } from './reducers/bookReducers'
+import{ bookListReducer,
+    bookDetailsReducer,
+    bookDeleteReducer,
+    bookCreateReducer,
+    bookUpdateReducer,
+    bookReviewReducer,} from './reducers/bookReducers'
 import{cartReducer} from './reducers/cartReducers'
+import{
+    orderCreateReducer,
+    orderDetailsReducer,
+    orderPayReducer,
+    orderDeliverReducer,
+    orderMyListReducer,
+    orderListReducer,
+} from './reducers/orderReducers'
 import {
     userLoginReducer,
     userRegisterReducer,
@@ -11,8 +24,9 @@ import {
     userListReducer,
     userDeleteReducer, 
     userUpdateReducer,
-} from './reducers/userReducer'
-import{orderCreateReducer, orderDetailsReducer, orderListReducer} from './reducers/orderReducers'
+} 
+from './reducers/userReducer'
+
 
 const reducer = combineReducers({
     bookList:bookListReducer,
@@ -20,8 +34,9 @@ const reducer = combineReducers({
     bookDelete:bookDeleteReducer,
     bookCreate:bookCreateReducer,
     bookUpdate:bookUpdateReducer,
-    cart: cartReducer,
-    userLogin:userLoginReducer,     
+    bookCreateReview:bookReviewReducer,
+    cart: cartReducer, 
+    userLogin:userLoginReducer,
     userRegister:userRegisterReducer,
     userDetails:userDetailsReducer,
     userUpdateProfile:userUpdateProfileReducer,
@@ -30,8 +45,11 @@ const reducer = combineReducers({
     userUpdate:userUpdateReducer,
     orderCreate:orderCreateReducer,
     orderDetails:orderDetailsReducer,
+    orderPay:orderPayReducer,
+    orderDeliver:orderDeliverReducer,
+    orderMyList:orderMyListReducer,
     orderList:orderListReducer,
-})
+}) 
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? 
 JSON.parse(localStorage.getItem('cartItems')) : []
@@ -46,9 +64,13 @@ JSON.parse(localStorage.getItem('shippingAddress')) : {}
 
 
 const initialState = {
-    cart: { cartItems: cartItemsFromStorage, 
-            shippingAddress: shippingAddressFromStorage,},
-    userLogin:{userInfo:userInfoFromStorage},
+    cart: { 
+        cartItems: cartItemsFromStorage, 
+        shippingAddress: shippingAddressFromStorage
+    },
+    userLogin:{
+        userInfo:userInfoFromStorage
+    },
 } 
 
 const middleware = [thunk]

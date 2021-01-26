@@ -33,19 +33,20 @@ const PaymentScreen = ({history}) => {
         
         <Col>
             <Form.Check type='radio' 
-            label='UPI or Card' 
-            id='UPI'
+            label='Paytm' 
+            id='paytm'
             name='paymentMethod' 
-            value = 'UPI' 
+            value = 'paytm' 
             checked 
             onChange={(e)=> setPaymentMethod(e.target.value)}>
             </Form.Check>
 
             <Form.Check type='radio' 
-            label='Internet Banking' 
-            id='NetBanking'
+            label='COD' 
+            id='cod'
             name='paymentMethod' 
-            value = 'NetBanking'   
+            value = 'cod' 
+            disabled={true} 
             onChange={(e)=> setPaymentMethod(e.target.value)}>
             </Form.Check>
         </Col> 

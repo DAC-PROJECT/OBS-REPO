@@ -8,14 +8,15 @@ import FormContainer from '../components/FormContainer'
 import {listBookDetails, updateBook} from '../actions/bookActions'
 import { BOOK_UPDATE_RESET } from '../constants/bookConstants'
 
+
 const BookEditScreen = ({match,history}) => {
   const bookId=match.params.id
-
   const[name,setName]=useState('')
   const[price,setPrice]=useState(0)
   const[image,setImage]=useState('')
-  const[publication,setPublication]=useState('')
+  const[writer,setWriter]=useState('')
   const[genre,setGenre]=useState('')
+  const[publication,setPublication]=useState('')
   const[countInStock,setCountInStock]=useState(0)
   const[description,setDescription]=useState('')
 
@@ -24,44 +25,47 @@ const BookEditScreen = ({match,history}) => {
   const bookDetails=useSelector(state=>state.bookDetails)
   const{loading,error,book}=bookDetails
 
-  const bookUpdate=useSelector(state=>state.bookDetails)
-  const{loading: loadingUpdate ,error: errorUpdate, success: successUpdate}=bookDetails
+  const bookUpdate=useSelector(state=>state.bookUpdate)
+  const{loading:loadingUpdate, error:errorUpdate, success:successUpdate}=bookUpdate
 
   useEffect(()=>{
-        //  if(successUpdate)
-        //  {
-        //    dispatch({type: BOOK_UPDATE_RESET})
-        //    history.push('/admin/booklist')
-        //  } else {
-          if(!book.name || book._id !==bookId){
-            dispatch(listBookDetails(bookId))
-         }  else {
-             setName(book.name)
-             setPrice(book.price)
-             setImage(book.image)
-             setPublication(book.publication)
-             setGenre(book.genre)
-             setCountInStock(book.countInStock)
-             setDescription(book.description)
-         }
-         } 
-            
-          ,[dispatch,history,bookId,book])
+         if(successUpdate){
+             dispatch({type: BOOK_UPDATE_RESET})
+             history.push('/admin/booklist')
+         } else {
+            if(!book.name || book._id !==bookId){
+                dispatch(listBookDetails(bookId))
+             }  else {
+                 setName(book.name)
+                 setPrice(book.price)
+                 setImage(book.image)
+                 setWriter(book.writer)
+                 setGenre(book.genre)
+                 setPublication(book.publication)
+                 setDescription(book.description)
+                 setCountInStock(book.countInStock)
+             }
+          }
+        },
+        
+    [dispatch,history,bookId,book,successUpdate])
 
 
    const submitHandler=(e)=>{
        e.preventDefault()
-       dispatch(updateBook({
-        _id: bookId,
-        name,
-        price,
-        image,
-        publication,
-        genre,
-        description,
-        countInStock,
+      //Update Book
+      dispatch(updateBook({
+          _id: bookId,
+          name,
+          price,
+          writer,
+          genre,
+          publication,
+          description,
+          image,
+          countInStock,
 
-       }))
+      }))
       }
     return (
         <>
@@ -83,73 +87,84 @@ const BookEditScreen = ({match,history}) => {
                                  onChange={(e)=>setName(e.target.value)}
                    ></Form.Control>
                 </Form.Group>
-    
+
                 <Form.Group controlId='price' >
-                   <Form.Label>
-                       Price
-                   </Form.Label>
+                <Form.Label>
+                      Book Price
+                   </Form.Label> 
                    <Form.Control type='number'
-                                 placeholder='Enter the price'
+                                 placeholder='Enter price'
                                  value={price}
                                  onChange={(e)=>setPrice(e.target.value)}
                    ></Form.Control>
                 </Form.Group>
 
                 <Form.Group controlId='image' >
-                <Form.Label>
-                       Image
+                   <Form.Label>
+                      Image
                    </Form.Label>
                    <Form.Control type='text'
-                                 placeholder='Enter the image url'
+                                 placeholder='Enter image url'
                                  value={image}
                                  onChange={(e)=>setImage(e.target.value)}
                    ></Form.Control>
-                   </Form.Group>
+                </Form.Group>
 
-                <Form.Group controlId='publication' >
-                <Form.Label>
-                       Publication
+                <Form.Group controlId='writer' >
+                   <Form.Label>
+                      Writer
                    </Form.Label>
                    <Form.Control type='text'
-                                 placeholder='Enter the publication'
-                                 value={publication}
-                                 onChange={(e)=>setPublication(e.target.value)}
+                                 placeholder='Enter writer name'
+                                 value={writer}
+                                 onChange={(e)=>setWriter(e.target.value)}
                    ></Form.Control>
-                   </Form.Group>
+                </Form.Group>
 
-                   <Form.Group controlId='genre' >
-                <Form.Label>
-                       Genre
+                <Form.Group controlId='genre' >
+                   <Form.Label>
+                      Genre
                    </Form.Label>
                    <Form.Control type='text'
                                  placeholder='Enter the genre'
                                  value={genre}
                                  onChange={(e)=>setGenre(e.target.value)}
                    ></Form.Control>
-                   </Form.Group>
-
-                   <Form.Group controlId='countInStock' >
+                </Form.Group> 
+    
+                <Form.Group controlId='publication' >
                    <Form.Label>
-                       Count in stock
+                      Publication
                    </Form.Label>
+                   <Form.Control type='text'
+                                 placeholder='Enter publisher name'
+                                 value={publication}
+                                 onChange={(e)=>setPublication(e.target.value)}
+                   ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='countInStock' >
+                <Form.Label>
+                      Count in stock
+                   </Form.Label> 
                    <Form.Control type='number'
-                                 placeholder='Enter the stock'
+                                 placeholder='Enter number of books available'
                                  value={countInStock}
                                  onChange={(e)=>setCountInStock(e.target.value)}
                    ></Form.Control>
                 </Form.Group>
 
                 <Form.Group controlId='description' >
-                <Form.Label>
-                     Description
+                   <Form.Label>
+                      Description
                    </Form.Label>
                    <Form.Control type='text'
-                                 placeholder='Enter the description'
-                                 value={description}
+                                 placeholder='Description'
+                                 value={publication}
                                  onChange={(e)=>setDescription(e.target.value)}
                    ></Form.Control>
-                   </Form.Group>
-            
+                </Form.Group>
+                
             <Button type='submit' variant='primary'>Update </Button>
               </Form>
             )}
@@ -158,4 +173,4 @@ const BookEditScreen = ({match,history}) => {
         )
 }
 
-export default BookEditScreen 
+export default BookEditScreen
