@@ -1,20 +1,17 @@
 import mongoose from 'mongoose'
 
 const reviewSchema=mongoose.Schema({
-    name:{
-         type:String,
-         required:true
+    name:{ type:String, required:true},
+    rating:{type:Number,required:true},
+   comment:{type:String,required:true},
+     user :{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User'
     },
-    rating:{
-        type:Number,
-        required:true
-   },
-   comment:{
-    type:Number,
-    required:true
 },
-},{
-    timestamps:true
+{
+    timestamps:true,
 })
 
 const bookSchema=mongoose.Schema({
@@ -73,9 +70,8 @@ const bookSchema=mongoose.Schema({
         type:String,
         required:true,
         default:'publication_name'
-    }
-   
-   // reviews:[reviewSchema],
+    },
+     reviews:[reviewSchema],
      
 },{
     timestamps:true

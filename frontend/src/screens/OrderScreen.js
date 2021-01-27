@@ -1,14 +1,22 @@
+
 import React,{useState,useEffect} from 'react'
-import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image} from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+<<<<<<< HEAD
 import { getOrderDetails,payOrder}from '../actions/orderActions' 
 import { orderDetailsReducer } from '../reducers/orderReducers'
 import {CART_RESET_ITEM} from '../constants/cartConstants'
 import {   ORDER_PAY_RESET} from '../constants/orderConstants'
+=======
+import { getOrderDetails,payOrder, deliverOrder}from '../actions/orderActions' 
+import {CART_REMOVE_ITEM,CART_ITEM_RESET} from '../constants/cartConstants'
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
+
+
+>>>>>>> 00490559a277ba562dc1d677cd8b9144f58767ae
 
 
 const OrderScreen = ({match}) => {
@@ -24,6 +32,13 @@ const OrderScreen = ({match}) => {
     const orderPay = useSelector((state)=>state.orderPay)
     const{ loading:loadingPay, success:successPay} = orderPay
      
+
+    const orderDeliver = useSelector((state)=>state.orderDeliver)
+    const{ loading:loadingDeliver, success:successDeliver} = orderDeliver
+     
+    const userLogin = useSelector((state)=>state.userLogin)
+    const{ userInfo} = userLogin
+
      
     if(!loading){
      const addDecimals = (num) => {
@@ -33,24 +48,38 @@ const OrderScreen = ({match}) => {
                      acc + item.price*item.qty,0))
     }
     useEffect(() => {
-          if (!order || successPay) {
+  if (!order || successPay || successDeliver) {
             dispatch({type:ORDER_PAY_RESET})
+            dispatch({type:ORDER_DELIVER_RESET})
             dispatch(getOrderDetails(orderId))   
          }  
                
-    }, [dispatch,orderId,successPay,order])
+    }, [dispatch,orderId,successPay,successDeliver,order])
+
+       
 
     const payNowHandler=()=>{
         if(!order.isPaid){
             setPayNow(true)
             dispatch(payOrder(order._id,order))
+<<<<<<< HEAD
              dispatch({type:ORDER_PAY_RESET})
              dispatch({type:CART_RESET_ITEM})
+=======
+            dispatch({type:CART_REMOVE_ITEM})
+            dispatch({type:CART_ITEM_RESET})
+>>>>>>> 00490559a277ba562dc1d677cd8b9144f58767ae
         }
         
     }
-    
 
+
+    const deliverHandler = () => {
+        dispatch(deliverOrder(order))
+    }
+
+
+   
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>:
     <>
     <h1>Order{order._id}</h1>
@@ -135,12 +164,21 @@ const OrderScreen = ({match}) => {
                         {!order.isPaid && (
                          <ListGroup.Item>
                              {loadingPay && <Loader/>}
-                             {!payNow &&
-                              <Button type='button'
+                             {!payNow && !userInfo.isAdmin &&(<Button type='button'
                               onClick={payNowHandler} className='btn-block'>Pay Now</Button>    
-                             }
+                             )}
                          </ListGroup.Item>
                         )}
+                        
+                        {loadingDeliver && <Loader />}
+                        {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                            <ListGroup.Item>
+                                <Button type='button' className='btn btn-block' onClick={deliverHandler}>
+                                    Mark As Delivered
+                                </Button>   
+                            </ListGroup.Item>
+                        )}
+
                     </ListGroup>
                 </Col>
             </Row>

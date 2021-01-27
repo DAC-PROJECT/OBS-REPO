@@ -13,7 +13,7 @@ const PaymentScreen = ({history}) => {
         history.push('/shipping')
     }
 
-    const[paymentMethod, setPaymentMethod] = useState('UPI')
+    const[paymentMethod, setPaymentMethod] = useState('online')
     
 
     const dispatch = useDispatch()
@@ -33,10 +33,10 @@ const PaymentScreen = ({history}) => {
         
         <Col>
             <Form.Check type='radio' 
-            label='Paytm' 
-            id='paytm'
+            label='online' 
+            id='online'
             name='paymentMethod' 
-            value = 'paytm' 
+            value = 'online' 
             checked 
             onChange={(e)=> setPaymentMethod(e.target.value)}>
             </Form.Check>
