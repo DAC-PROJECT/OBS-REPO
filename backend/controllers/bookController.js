@@ -6,7 +6,7 @@ import Book from '../models/bookModel.js'
 //@route Get /api/books
 //@access public
 const getBooks=asyncHandler(async(req,res)=>{
-    const pageSize = 4
+    const pageSize = 8
     const page = Number(req.query.pageNumber) || 1
     const keyword = req.query.keyword ? {
         name: {
@@ -109,7 +109,7 @@ const updateBook=asyncHandler(async(req,res)=>{
 //@route POST /api/books/:id/reviews
 //@access Private
 const createBookReview=asyncHandler(async(req,res)=>{
-    const{rating, comment} = req.body
+     const{rating, comment} = req.body
  
      const book = await Book.findById(req.params.id)
  
@@ -119,14 +119,15 @@ const createBookReview=asyncHandler(async(req,res)=>{
 
        if(alreadyReviewed){
            res.status(400)
-           throw new Error('Product already reviewed')
+           throw new Error('Book already reviewed')
        } 
         const review = {
             name:req.user.name,
             rating: Number(rating),
             comment,
-            user: req.user._id,
+            user: req.user._id
         }
+
         book.reviews.push(review)
 
         book.numReviews = book.reviews.length
@@ -135,14 +136,24 @@ const createBookReview=asyncHandler(async(req,res)=>{
 
             await book.save() 
             res.status(201).json({message:'Review added'})
+            } else {
+           res.status(404)
+           throw new Error('Book not found')
+            }
+  })
 
-    } 
-     else{
-         res.status(404)
-         throw new Error('Book not found')
-     }
- 
-     })
+
+
+
+
+
+//@desc get top rated books
+//@route GET /api/books/top
+//@access public
+const getTopBooks=asyncHandler(async(req,res)=>{
+    const books=await Book.find({}).sort({rating:-1}).limit(5)
+    res.json(books)
+  })
 
 export{
     getBooks,
@@ -151,4 +162,5 @@ export{
     createBook,
     updateBook,
     createBookReview,
+    getTopBooks,
 }

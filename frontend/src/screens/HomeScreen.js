@@ -1,10 +1,12 @@
 import React, { useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Book from '../components/Book'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Pagenate from '../components/Pagenate'
+import BookCarousel from '../components/BookCarousel'
 import { listBooks }  from '../actions/bookActions'
 
 
@@ -24,6 +26,7 @@ const HomeScreen = ({match}) =>
   
     return (
         <>
+        {!keyword ? <BookCarousel/>:<Link to='/' className='btn btn-light'>Go Back</Link>}
          <h1>Latest Books</h1>
          {loading ? (
         <Loader></Loader>

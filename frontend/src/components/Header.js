@@ -2,9 +2,10 @@ import React from 'react'
 import {Route} from  'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
-import {Navbar, Nav, Container,NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, Container,NavDropdown,Image} from 'react-bootstrap'
 import {logout} from '../actions/userActions'
 import SearchBox from './SearchBox'
+import {CART_ITEM_RESET} from '../constants/cartConstants'
 
 const Header = () => {
     
@@ -14,6 +15,7 @@ const Header = () => {
   const {userInfo}=userLogin
   
   const logoutHandler=()=>{
+    dispatch({type:CART_ITEM_RESET})
     dispatch(logout())
   }
 
@@ -22,7 +24,7 @@ const Header = () => {
             <Navbar bg="dark" variant = 'dark' expand="lg" collapseOnSelect>
                 <Container>
                   <LinkContainer to='/'>
-                    <Navbar.Brand >OBS</Navbar.Brand>
+                    <Image src='/images/home.png' alt='home' id='home'></Image>
                   </LinkContainer>
 
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -44,10 +46,9 @@ const Header = () => {
                Profile
              </NavDropdown.Item>
            </LinkContainer>
-           <NavDropdown.Item onClick={logoutHandler} >
-           LogOut
-           </NavDropdown.Item>
-          </NavDropdown>
+           <LinkContainer to='/' >
+             <NavDropdown.Item onClick={logoutHandler} > LogOut </NavDropdown.Item></LinkContainer>
+           </NavDropdown>
 
     ) :( <LinkContainer to='/login'>
     <Nav.Link >

@@ -6,7 +6,7 @@ import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {listBookDetails, createBookReview} from '../actions/bookActions'
-import { Form, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import {BOOK_CREATE_REVIEW_RESET} from '../constants/bookConstants'
 
 
@@ -16,18 +16,18 @@ const [rating, setRating] = useState(0)
 const [comment, setComment] = useState('')
 
     const dispatch=useDispatch()
+
     const bookDetails=useSelector(state=>state.bookDetails)
     const {loading,error,book}=bookDetails
 
     const userLogin=useSelector(state=>state.userLogin)
     const {userInfo}=userLogin 
 
-    const bookReviewCreate=useSelector(state=>state.bookReviewCreate)
-    const {success: successBookReview, error: errorBookReview } = bookReviewCreate  
+    const bookCreateReview=useSelector(state=>state.bookCreateReview)
+    const {success: successBookReview, error: errorBookReview } = bookCreateReview 
 
    useEffect(()=>{
        if(successBookReview){
-           alert('Review submitted')
            setRating(0)
            setComment('')
            dispatch({type: BOOK_CREATE_REVIEW_RESET})
@@ -59,7 +59,16 @@ const [comment, setComment] = useState('')
                  <Col md={5}>
                   <ListGroup variant='flush'>
                       <ListGroup.Item>
-                        <h2>{book.name}</h2>
+                       <h2>{book.name}</h2>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <h6>Publication : {book.publication}</h6>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <h6>Writer : {book.writer}</h6>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <h6>Genre : {book.genre}</h6>
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <Rating value={book.rating} text={`${book.numReviews}reviews` } />
@@ -132,7 +141,7 @@ const [comment, setComment] = useState('')
                  <Col md={6}>
                     <h2>Reviews</h2>
 
-                    {book.review.length === 0 && <Message>No Reviews</Message>}
+                    {book.reviews.length === 0 && <Message>No Reviews</Message>}
                     <ListGroup variant = 'flush'>
                         {book.reviews.map((review)=>(
                             <ListGroup.Item key={review._id}>

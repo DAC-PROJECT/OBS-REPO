@@ -1,22 +1,15 @@
 
 import React,{useState,useEffect} from 'react'
-import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image} from 'react-bootstrap'
 import {useDispatch,useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails,payOrder, deliverOrder}from '../actions/orderActions' 
-import { orderDetailsReducer } from '../reducers/orderReducers'
-import {CART_REMOVE_ITEM} from '../constants/cartConstants'
-import {   ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
+import {CART_REMOVE_ITEM,CART_ITEM_RESET} from '../constants/cartConstants'
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
 
 
-const OrderScreen = ({match,/*history*/}) => {
-import { getOrderDetails,payOrder}from '../actions/orderActions' 
-import { orderDetailsReducer } from '../reducers/orderReducers'
-import {CART_REMOVE_ITEM} from '../constants/cartConstants'
-import {   ORDER_PAY_RESET} from '../constants/orderConstants'
 
 
 const OrderScreen = ({match}) => {
@@ -48,34 +41,22 @@ const OrderScreen = ({match}) => {
                      acc + item.price*item.qty,0))
     }
     useEffect(() => {
-
-        // if(userInfo){
-        //     history.push('/login')
-        // }
-
-
-          if (!order || successPay || successDeliver) {
+  if (!order || successPay || successDeliver) {
             dispatch({type:ORDER_PAY_RESET})
             dispatch({type:ORDER_DELIVER_RESET})
-
             dispatch(getOrderDetails(orderId))   
          }  
                
     }, [dispatch,orderId,successPay,successDeliver,order])
 
-          if (!order || successPay) {
-            dispatch({type:ORDER_PAY_RESET})
-            dispatch(getOrderDetails(orderId))   
-         }  
-               
-    }, [dispatch,orderId,successPay,order])
-
+       
 
     const payNowHandler=()=>{
         if(!order.isPaid){
             setPayNow(true)
             dispatch(payOrder(order._id,order))
             dispatch({type:CART_REMOVE_ITEM})
+            dispatch({type:CART_ITEM_RESET})
         }
         
     }
@@ -171,10 +152,9 @@ const OrderScreen = ({match}) => {
                         {!order.isPaid && (
                          <ListGroup.Item>
                              {loadingPay && <Loader/>}
-                             {!payNow &&
-                              <Button type='button'
+                             {!payNow && !userInfo.isAdmin &&(<Button type='button'
                               onClick={payNowHandler} className='btn-block'>Pay Now</Button>    
-                             }
+                             )}
                          </ListGroup.Item>
                         )}
                         

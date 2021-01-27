@@ -127,7 +127,6 @@ export{
     updateOrderToPaid,
     updateOrderToDelivered,
     getMyOrders,
-    getOrders,
-    getMyOrders,
+    getOrders,  
 }
 
