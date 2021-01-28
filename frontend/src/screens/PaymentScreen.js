@@ -13,7 +13,7 @@ const PaymentScreen = ({history}) => {
         history.push('/shipping')
     }
 
-    const[paymentMethod, setPaymentMethod] = useState('online')
+    const[paymentMethod, setPaymentMethod] = useState('ONLINE')
     
 
     const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const PaymentScreen = ({history}) => {
         dispatch(savePaymentMethod(paymentMethod))
         history.push('/placeorder')
     }
+    
     return (
         <FormContainer> 
         <CheckoutSteps step1 step2 step3 />
@@ -33,11 +34,11 @@ const PaymentScreen = ({history}) => {
         
         <Col>
             <Form.Check type='radio' 
-            label='online' 
+            label='ONLINE' 
             id='online'
             name='paymentMethod' 
-            value = 'online' 
-            checked 
+            value = 'ONLINE' 
+            checked
             onChange={(e)=> setPaymentMethod(e.target.value)}>
             </Form.Check>
 

@@ -11,13 +11,19 @@ const CartScreen = ({match, location, history}) => {
 
     const qty = location.search ? Number(location.search.split('=')[1]) : 1
     const dispatch = useDispatch()
+    
     const cart  = useSelector( state => state.cart )
     const{ cartItems } = cart
+    
+    const orderDetails = useSelector((state)=>state.orderDetails)
+    const{ order} = orderDetails
+
     useEffect(() => {
         if(bookId) {
             dispatch(addToCart(bookId, qty))
         }
-    }, [dispatch,bookId, qty])
+       
+    }, [dispatch,bookId, qty,order])
  
     const removeFromCartHandler=(id)=>{
         dispatch(removeFromCart(id))

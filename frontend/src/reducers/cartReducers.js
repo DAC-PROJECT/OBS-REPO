@@ -3,11 +3,7 @@ import {
     CART_REMOVE_ITEM,
     CART_SAVE_SHIPPING_ADDRESS,
     CART_SAVE_PAYMENT_METHOD,
-<<<<<<< HEAD
-    CART_RESET_ITEM,
-=======
     CART_ITEM_RESET,
->>>>>>> 00490559a277ba562dc1d677cd8b9144f58767ae
    } 
 from '../constants/cartConstants'
 
@@ -48,18 +44,12 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {}}, actio
              return{
                     ...state,
                     paymentMethod: action.payload,
-                 } 
-        case CART_RESET_ITEM:
-            return {
-                cartItems: []
-            }         
+                 }       
 
         case CART_ITEM_RESET:
-            return{
-                 ...state,
-                cartItems: [],
-                shippingAddress: {}
-            }
+            return{ 
+                cartItems: [], shippingAddress: {}
+             }
         default:
         return state 
     }

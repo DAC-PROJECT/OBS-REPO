@@ -22,27 +22,31 @@ const PlaceOrderScreen = ({history}) => {
     cart.totalPrice= addDecimals(Number(cart.itemsPrice) + Number(cart.shippingPrice)
                     + Number(cart.taxPrice))
 
-    const orderCreate = useSelector(state=>state.orderCreate)
+     const orderCreate = useSelector(state=>state.orderCreate)
     const { order, success, error} = orderCreate
+          
 
-    useEffect(() => {
-        if(success) {
-            history.push(`/order/${order._id}`)
-        }
-      // eslint-disable-next-line 
-    }, [history, success])
 
-    const placeOrderHandler = () => {
-        dispatch(createOrder({
-            orderItems: cart.cartItems,
-            shippingAddress: cart.shippingAddress, 
-            paymentMethod: cart.paymentMethod,
-            itemsPrice: cart.itemsPrice,
-            shippingPrice: cart.shippingPrice,
-            taxPrice: cart.taxPrice,
-            totalPrice: cart.totalPrice,
-        }))
-    }
+         useEffect(() => {
+                 if(success) {
+                      history.push(`/order/${order._id}`)
+                     }
+                    // eslint-disable-next-line   
+                    }, [history, success,order])
+
+                    const placeOrderHandler = () => {
+                        dispatch(createOrder({
+                            orderItems: cart.cartItems,
+                            shippingAddress: cart.shippingAddress, 
+                            paymentMethod: cart.paymentMethod,
+                            itemsPrice: cart.itemsPrice,
+                            shippingPrice: cart.shippingPrice,
+                            taxPrice: cart.taxPrice,
+                            totalPrice: cart.totalPrice,
+                        }))
+                    }
+
+ 
 
     return (
         <>
