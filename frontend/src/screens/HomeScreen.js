@@ -8,9 +8,11 @@ import Loader from '../components/Loader'
 import Pagenate from '../components/Pagenate'
 import BookCarousel from '../components/BookCarousel'
 import { listBooks }  from '../actions/bookActions'
+import {CART_ITEM_RESET} from '../constants/cartConstants'
+import {ORDER_DETAILS_RESET,ORDER_CREATE_RESET} from '../constants/orderConstants'
+import {BOOK_DETAILS_RESET} from '../constants/bookConstants'
 
-
-const HomeScreen = ({match}) =>
+const HomeScreen = ({match,location}) =>
  {
      const keyword = match.params.keyword
      const pageNumber = match.params.pageNumber || 1
@@ -19,9 +21,24 @@ const HomeScreen = ({match}) =>
      const bookList = useSelector(state => state.bookList)
      const{ loading,error,books,page,pages } = bookList
 
+     const orderDetails = useSelector((state)=>state.orderDetails)
+     const{ order} = orderDetails
+
+     const cart  = useSelector( state => state.cart )
+     const{ cartItems } = cart
+     
+    
+   
     useEffect(()=>{
+        if(order && cartItems) {
+           // window.location.reload()
+           dispatch({type:CART_ITEM_RESET})
+           dispatch({type:ORDER_DETAILS_RESET})
+           dispatch({type:ORDER_CREATE_RESET})
+           dispatch({type:BOOK_DETAILS_RESET})
+         }  
             dispatch(listBooks(keyword, pageNumber))    
-        },[dispatch, keyword, pageNumber ])
+        },[dispatch, keyword, pageNumber ,order,cartItems])
 
   
     return (

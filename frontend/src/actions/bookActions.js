@@ -22,6 +22,7 @@ import {
     BOOK_TOP_FAIL,
 } from '../constants/bookConstants'
 
+
 export const listBooks = (keyword = '', pageNumber='')=> async(dispatch) => {
     try {
             dispatch({type: BOOK_LIST_REQUEST})
@@ -50,6 +51,7 @@ export const listBooks = (keyword = '', pageNumber='')=> async(dispatch) => {
                   type: BOOK_DETAILS_SUCCESS,
                   payload:data
             })
+           
       } catch(error) {
         dispatch( {
                 type: BOOK_DETAILS_FAIL,
