@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails,payOrder, deliverOrder}from '../actions/orderActions' 
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
+import {CART_ITEM_RESET} from '../constants/cartConstants'
 
 
 
@@ -52,6 +53,7 @@ const OrderScreen = ({match}) => {
 
     const payNowHandler=()=>{
             dispatch(payOrder(orderId,order))
+            dispatch({type:CART_ITEM_RESET})
     }
 
 
@@ -152,7 +154,7 @@ const OrderScreen = ({match}) => {
                         )}
                         
                         {loadingDeliver && <Loader />}
-                        {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                        {userInfo.isAdmin && order.isPaid && !loadingDeliver && !order.isDelivered && (
                             <ListGroup.Item>
                                 <Button type='button' className='btn btn-block' onClick={deliverHandler}>
                                     Mark As Delivered
