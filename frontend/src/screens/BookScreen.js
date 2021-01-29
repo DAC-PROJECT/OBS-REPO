@@ -52,10 +52,10 @@ const [comment, setComment] = useState('')
              {loading ? <Loader />: error? <Message variant='danger' >{error}</Message> : (
                  <>
                  <Row>
-                 <Col md={3}>
+                 <Col md={2}>
                  <Image src={book.image} alt={book.name}  />
                  </Col>
-                 <Col md={5}>
+                 <Col md={7}>
                   <ListGroup variant='flush'>
                       <ListGroup.Item>
                        <h2>{book.name}</h2>

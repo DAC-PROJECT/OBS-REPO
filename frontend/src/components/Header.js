@@ -71,6 +71,12 @@ const Header = () => {
          </LinkContainer>
         </NavDropdown>
      )}
+      <LinkContainer to='/about'>
+     <Nav.Link >
+        <i className='fas fa-info' ></i> About Us 
+      </Nav.Link> 
+    </LinkContainer>
+
     </Nav>
    
   </Navbar.Collapse>
