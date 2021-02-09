@@ -189,7 +189,7 @@ const BookEditScreen = ({match,history}) => {
                    </Form.Label>
                    <Form.Control type='text'
                                  placeholder='Description'
-                                 value={publication}
+                                 value={description}
                                  onChange={(e)=>setDescription(e.target.value)}
                    ></Form.Control>
                 </Form.Group>
